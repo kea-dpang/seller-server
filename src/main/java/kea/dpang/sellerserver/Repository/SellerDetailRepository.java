@@ -4,5 +4,8 @@ import kea.dpang.sellerserver.Entity.SellerDetailEntity;
 import kea.dpang.sellerserver.Entity.SellerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SellerDetailEntityRepository extends JpaRepository<SellerDetailEntity, SellerEntity> {
+import java.util.Optional;
+
+public interface SellerDetailRepository extends JpaRepository<SellerDetailEntity, SellerEntity> {
+    Optional<SellerDetailEntity> findSellerDetailEntityBySeller(SellerEntity seller);
 }
