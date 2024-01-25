@@ -1,9 +1,9 @@
-package kea.dpang.sellerserver.Controller;
+package kea.dpang.seller.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import kea.dpang.sellerserver.base.ErrorResponse;
-import kea.dpang.sellerserver.exception.SellerDetailNotFoundException;
-import kea.dpang.sellerserver.exception.SellerNotFoundException;
+import kea.dpang.seller.base.ErrorResponse;
+import kea.dpang.seller.exception.SellerDetailNotFoundException;
+import kea.dpang.seller.exception.SellerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

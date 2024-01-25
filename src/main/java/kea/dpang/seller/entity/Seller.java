@@ -1,4 +1,4 @@
-package kea.dpang.sellerserver.Entity;
+package kea.dpang.seller.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class SellerEntity {
+public class Seller {
 
     /**
      * 판매처 Entity의 ID
@@ -27,7 +27,7 @@ public class SellerEntity {
      */
     @OneToOne(mappedBy = "seller", orphanRemoval = true)
     @PrimaryKeyJoinColumn
-    private SellerDetailEntity sellerDetail;
+    private SellerDetail sellerDetail;
 
     /**
      * 판매처 전화번호
@@ -48,7 +48,7 @@ public class SellerEntity {
     private String sellerStaff;
 
     @Builder
-    public SellerEntity(String phoneNumber, String name, String sellerStaff) {
+    public Seller(String phoneNumber, String name, String sellerStaff) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.sellerStaff = sellerStaff;
@@ -63,7 +63,7 @@ public class SellerEntity {
      * @return 판매처 Entity<br>
      * 판매처 상세 repository에서 판매처 상세 Entity를 찾을 때 사용됩니다.
      */
-    public SellerEntity updateSeller(String phone_number, String name, String seller_staff) {
+    public Seller updateSeller(String phone_number, String name, String seller_staff) {
         this.phoneNumber = phone_number;
         this.name = name;
         this.sellerStaff = seller_staff;

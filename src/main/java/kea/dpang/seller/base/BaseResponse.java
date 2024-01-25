@@ -1,4 +1,4 @@
-package kea.dpang.sellerserver.base;
+package kea.dpang.seller.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package kea.dpang.sellerserver.Entity;
+package kea.dpang.seller.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -15,13 +15,13 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @Getter
-public class SellerDetailEntity {
+public class SellerDetail {
 
     /**
      * 판매처 상세 Entity의 ID
      */
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     /**
@@ -30,7 +30,7 @@ public class SellerDetailEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "id", referencedColumnName = "id")
-    private SellerEntity seller;
+    private Seller seller;
 
     /**
      * 해당 판매처를 관리하는 관리자
@@ -51,7 +51,7 @@ public class SellerDetailEntity {
     private String note;
 
     @Builder
-    public SellerDetailEntity(SellerEntity seller, String sellerManager, LocalDate expiryDate, String note) {
+    public SellerDetail(Seller seller, String sellerManager, LocalDate expiryDate, String note) {
         this.seller = seller;
         this.sellerManager = sellerManager;
         this.expiryDate = expiryDate;
@@ -62,10 +62,10 @@ public class SellerDetailEntity {
      * 판매처 상세 수정 메소드
      *
      * @param seller_manager 판매처 관리자
-     * @param expiry_date 계약 만료 날짜
-     * @param note 비고
+     * @param expiry_date    계약 만료 날짜
+     * @param note           비고
      */
-    public void updateSellerDetail(String seller_manager, LocalDate expiry_date, String note){
+    public void updateSellerDetail(String seller_manager, LocalDate expiry_date, String note) {
         this.sellerManager = seller_manager;
         this.expiryDate = expiry_date;
         this.note = note;

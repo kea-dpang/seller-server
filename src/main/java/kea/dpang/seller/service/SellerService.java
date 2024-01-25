@@ -1,12 +1,11 @@
-package kea.dpang.sellerserver.Service;
+package kea.dpang.seller.service;
 
-import kea.dpang.sellerserver.Dto.Request.SellerCreateDto;
-import kea.dpang.sellerserver.Dto.Response.AllSellerGetDto;
+import kea.dpang.seller.dto.request.SellerCreateDto;
+import kea.dpang.seller.dto.response.AllSellerGetDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Seller 서비스 인터페이스

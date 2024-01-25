@@ -1,4 +1,4 @@
-package kea.dpang.sellerserver.Dto.Request;
+package kea.dpang.seller.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,13 +7,18 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * 판매처 등록, 수정, 조회에 사용되는 DTO
+ * 판매처 조회에 사용되는 DTO
  *
  * @author Tomas
  */
 @NoArgsConstructor
 @Getter
-public class SellerCreateDto {
+public class AllSellerGetDto {
+
+    /**
+     * 판매처 ID
+     */
+    private Long id;
 
     /**
      * 판매처 이름
@@ -40,18 +45,13 @@ public class SellerCreateDto {
      */
     private LocalDate expiryDate;
 
-    /**
-     * 비고
-     */
-    private String note;
-
     @Builder
-    public SellerCreateDto(String name, String phone, String sellerStaff, String manager, LocalDate expiryDate, String note) {
+    public AllSellerGetDto(Long id, String name, String phone, String sellerStaff, String manager, LocalDate expiryDate) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.sellerStaff = sellerStaff;
         this.manager = manager;
         this.expiryDate = expiryDate;
-        this.note = note;
     }
 }

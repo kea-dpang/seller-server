@@ -1,4 +1,4 @@
-package kea.dpang.sellerserver;
+package kea.dpang.seller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
