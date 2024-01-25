@@ -1,125 +1,57 @@
 package kea.dpang.seller.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import kea.dpang.seller.dto.request.SellerCreateDto;
-import kea.dpang.seller.dto.response.AllSellerGetDto;
-import kea.dpang.seller.service.SellerServiceImpl;
 import kea.dpang.seller.base.BaseResponse;
 import kea.dpang.seller.base.SuccessResponse;
-import lombok.RequiredArgsConstructor;
+import kea.dpang.seller.dto.request.CreateSellerRequestDto;
+import kea.dpang.seller.dto.request.UpdateSellerRequestDto;
+import kea.dpang.seller.dto.response.SellerResponseDto;
+import kea.dpang.seller.dto.response.DetailSellerResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * seller 서비스의 컨트롤러
- *
- * @author Tomas
- */
-@Tag(name = "Seller", description = "seller 서비스 api")
-@RestController
-@RequestMapping("/seller")
-@RequiredArgsConstructor
-public class SellerController {
-
-    private final SellerServiceImpl sellerService;
+public interface SellerController {
 
     /**
-     * API
-     * GET : 판매처를 페이지네이션하여 조회합니다.
+     * 판매처 목록을 조회합니다.
      *
-     * @return 응답 코드, 판매처 정보를 담은 DTO 페이지
+     * @param pageable 페이지 정보
+     * @return 응답 코드와 판매처 정보를 담은 페이지 DTO
      */
-    @GetMapping
-    @Operation(summary = "판매처 목록 조회", description = "판매처를 페이지네이션하여 조회합니다.")
-    public ResponseEntity<SuccessResponse<Page<AllSellerGetDto>>> getSellerList(
-            Pageable pageable
-    ) {
-        Page<AllSellerGetDto> sellerDtoPage = sellerService.getSellerList(pageable);
-        return ResponseEntity.ok(new SuccessResponse<>(200, "판매처 목록 조회가 완료되었습니다.", sellerDtoPage));
-    }
+    ResponseEntity<SuccessResponse<Page<SellerResponseDto>>> getSellerList(Pageable pageable);
 
     /**
-     * @return 성공 : 모든 판매처 정보 리스트, 200 OK
-     * @deprecated getSellerList로 대체됨
-     * API
-     * GET : 모든 판매처들을 조회합니다.
-     */
-//    @GetMapping
-    @Operation(summary = "모든 판매처 조회", description = "모든 판매처를 조회합니다.")
-    public ResponseEntity<List<AllSellerGetDto>> getAllSeller() {
-        return new ResponseEntity<>(sellerService.getAllSeller(), HttpStatus.OK);
-    }
-
-    /**
-     * API
-     * GET : 특정 판매처 정보를 조회합니다.
+     * 특정 판매처 정보를 조회합니다.
      *
-     * @param id 조회할 판매처의 id
-     * @return 응답 코드, 판매처 ID에 해당하는 판매처 정보
+     * @param id 조회할 판매처의 ID
+     * @return 응답 코드와 해당 판매처 정보를 담은 DTO
      */
-    @GetMapping("/{id}")
-    @Operation(summary = "특정 판매처 조회", description = "특정 판매처 정보를 조회합니다.")
-    public ResponseEntity<SuccessResponse<SellerCreateDto>> getSeller(
-            @PathVariable @Parameter(description = "Seller ID") Long id
-    ) {
-        SellerCreateDto seller = sellerService.getSeller(id);
-        return ResponseEntity.ok(new SuccessResponse<>(200, "판매처 조회가 완료되었습니다.", seller));
-    }
+    ResponseEntity<SuccessResponse<DetailSellerResponseDto>> getSeller(Long id);
 
     /**
-     * API
-     * POST : 하나의 판매처를 데이터베이스에 등록합니다.
+     * 판매처를 데이터베이스에 등록합니다.
      *
-     * @param sellerCreateDto 등록할 판매처의 정보가 담긴 DTO
+     * @param createSellerRequestDto 등록할 판매처 정보가 담긴 DTO
      * @return 응답 코드
      */
-    @PostMapping
-    @Operation(summary = "판매처 등록", description = "하나의 판매처를 데이터베이스에 등록합니다.")
-    public ResponseEntity<BaseResponse> postSeller(
-            @RequestBody @Parameter(description = "판매처 생성 정보") SellerCreateDto sellerCreateDto
-    ) {
-        sellerService.createSeller(sellerCreateDto);
-        return ResponseEntity.ok(new BaseResponse(201, "판매처 생성이 완료되었습니다."));
-    }
+    ResponseEntity<BaseResponse> postSeller(CreateSellerRequestDto createSellerRequestDto);
 
     /**
-     * API
-     * PUT : 특정 판매처의 정보를 수정합니다.
+     * 특정 판매처의 정보를 수정합니다.
      *
      * @param id              수정할 판매처의 ID
      * @param sellerUpdateDto 수정할 내용이 담긴 DTO
      * @return 응답 코드
      */
-    @PutMapping("/{id}")
-    @Operation(summary = "판매처 수정", description = "특정 판매처의 정보를 수정합니다.")
-    public ResponseEntity<BaseResponse> updateSeller(
-            @PathVariable @Parameter(description = "수정할 판매처 ID") Long id,
-            @RequestBody @Parameter(description = "수정 내용") SellerCreateDto sellerUpdateDto
-    ) {
-        sellerService.updateSeller(id, sellerUpdateDto);
-        return ResponseEntity.ok(new BaseResponse(200, "판매처 정보 수정이 완료되었습니다."));
-    }
+    ResponseEntity<BaseResponse> updateSeller(Long id, UpdateSellerRequestDto sellerUpdateDto);
 
     /**
-     * API
-     * DELETE : 하나 혹은 복수의 판매처를 데이터베이스에서 삭제합니다.
+     * 하나 혹은 여러 판매처를 데이터베이스에서 삭제합니다.
      *
-     * @param ids 삭제할 판매처들의 ID List
-     * @return 성공 : 응답 코드
+     * @param ids 삭제할 판매처들의 ID 목록
+     * @return 응답 코드 (성공 시)
      */
-    @DeleteMapping
-    @Operation(summary = "판매처 삭제", description = "하나 혹은 복수의 판매처를 데이터베이스에서 삭제합니다.")
-    public ResponseEntity<BaseResponse> deleteSellers(
-            @RequestBody @Parameter(description = "삭제할 판매처 ID 리스트") List<Long> ids
-    ) {
-        sellerService.deleteSeller(ids);
-        return ResponseEntity.ok(new BaseResponse(200, "판매처 삭제가 완료되었습니다."));
-    }
+    ResponseEntity<BaseResponse> deleteSellers(List<Long> ids);
 }

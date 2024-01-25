@@ -1,6 +1,7 @@
 package kea.dpang.seller.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,65 +10,42 @@ import java.time.LocalDate;
 
 /**
  * 판매처 상세 Entity
- *
- * @author Tomas
  */
-@Entity
-@NoArgsConstructor
 @Getter
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SellerDetail {
 
-    /**
-     * 판매처 상세 Entity의 ID
-     */
     @Id
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "seller_detail_id")
+    private Long id; // Seller 엔티티와 공유하는 ID, 별도의 GeneratedValue 어노테이션은 필요하지 않음.
 
-    /**
-     * 판매처 상세 Entity와 연관된 판매처 Entity
-     */
     @OneToOne
-    @MapsId
+    @MapsId // ID를 Seller 엔티티와 공유함을 명시.
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Seller seller;
 
-    /**
-     * 해당 판매처를 관리하는 관리자
-     */
     @Column(name = "seller_manager")
-    private String sellerManager;
+    private String sellerManager; // 해당 판매처를 관리하는 관리자
 
-    /**
-     * 계약 만료 날짜
-     */
     @Column(name = "expiry_date")
-    private LocalDate expiryDate;
+    private LocalDate expiryDate; // 계약 만료 날짜
+
+    @Column(name = "note")
+    private String note; // 비고
 
     /**
-     * 비고
+     * 판매처 상세 정보를 수정합니다.
+     *
+     * @param sellerManager 판매처 관리자
+     * @param expiryDate    계약 만료 날짜
+     * @param note          비고
      */
-    @Column(name = "note")
-    private String note;
-
-    @Builder
-    public SellerDetail(Seller seller, String sellerManager, LocalDate expiryDate, String note) {
-        this.seller = seller;
+    public void update(String sellerManager, LocalDate expiryDate, String note) {
         this.sellerManager = sellerManager;
         this.expiryDate = expiryDate;
-        this.note = note;
-    }
-
-    /**
-     * 판매처 상세 수정 메소드
-     *
-     * @param seller_manager 판매처 관리자
-     * @param expiry_date    계약 만료 날짜
-     * @param note           비고
-     */
-    public void updateSellerDetail(String seller_manager, LocalDate expiry_date, String note) {
-        this.sellerManager = seller_manager;
-        this.expiryDate = expiry_date;
         this.note = note;
     }
 }
