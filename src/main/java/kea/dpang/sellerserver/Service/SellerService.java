@@ -2,8 +2,11 @@ package kea.dpang.sellerserver.Service;
 
 import kea.dpang.sellerserver.Dto.Request.SellerCreateDto;
 import kea.dpang.sellerserver.Dto.Response.AllSellerGetDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Seller 서비스 인터페이스
@@ -12,6 +15,15 @@ import java.util.List;
 public interface SellerService {
 
     /**
+     * 판매처를 페이지네이션하여 조회합니다. 모든 판매처를 조회합니다.
+     *
+     * @param pageable 페이지네이션 정보
+     * @return 페이지네이션된 QnA 정보
+     */
+    Page<AllSellerGetDto> getSellerList(Pageable pageable);
+
+    /**
+     * @deprecated getSellerList로 대체되었습니다.
      * 데이터베이스에 있는 모든 판매처들의 정보를 조회합니다.
      *
      * @return 조회된 판매처의 정보가 담긴 DTO List

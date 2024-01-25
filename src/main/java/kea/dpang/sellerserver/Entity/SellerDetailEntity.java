@@ -66,7 +66,6 @@ public class SellerDetailEntity {
      * @param note 비고
      */
     public void updateSellerDetail(String seller_manager, LocalDate expiry_date, String note){
-        System.out.println("Seller Detail Updaate");
         this.sellerManager = seller_manager;
         this.expiryDate = expiry_date;
         this.note = note;

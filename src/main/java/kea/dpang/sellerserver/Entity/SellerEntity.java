@@ -64,7 +64,6 @@ public class SellerEntity {
      * 판매처 상세 repository에서 판매처 상세 Entity를 찾을 때 사용됩니다.
      */
     public SellerEntity updateSeller(String phone_number, String name, String seller_staff) {
-        System.out.println("Seller Update");
         this.phoneNumber = phone_number;
         this.name = name;
         this.sellerStaff = seller_staff;
