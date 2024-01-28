@@ -52,6 +52,16 @@ public class SellerControllerImpl implements SellerController {
     }
 
     @Override
+    @GetMapping("/findName")
+    @Operation(summary = "특정 판매처 이름 조회", description = "특정 판매처의 이름을 조회합니다.")
+    public ResponseEntity<SuccessResponse<String>> getSellerName(
+            @RequestParam @Parameter(description = "Seller ID") Long id
+    ){
+        String sellerName = sellerService.getSellerName(id);
+        return ResponseEntity.ok(new SuccessResponse<>(200, "판매처 이름 조회가 완료되었습니다.", sellerName));
+    }
+
+    @Override
     @PostMapping
     @Operation(summary = "판매처 등록", description = "하나의 판매처를 데이터베이스에 등록합니다.")
     public ResponseEntity<BaseResponse> postSeller(
