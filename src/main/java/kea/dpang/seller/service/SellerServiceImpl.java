@@ -46,6 +46,14 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public String getSellerName(Long sellerId){
+        return sellerRepository.findById(sellerId)
+                .orElseThrow(()->new SellerNotFoundException(sellerId))
+                .getName();
+    }
+
+    @Override
     public void createSeller(CreateSellerRequestDto dto) {
         // requestDto의 정보를 이용해서 새로운 Seller 객체를 생성한다.
         // 연관된 SellerDetail 객체도 함께 생성되고, cascade 옵션으로 인해
@@ -75,7 +83,7 @@ public class SellerServiceImpl implements SellerService {
         }
 
         // 상세 정보를 DTO에 담긴 정보로 갱신합니다.
-        sellerDetail.update(dto.getManager(), dto.getExpiryDate(), dto.getNote());
+        sellerDetail.update(dto);
     }
 
     @Override

@@ -33,6 +33,13 @@ public interface SellerService {
     DetailSellerResponseDto getSeller(Long sellerId);
 
     /**
+     * 판매처의 ID로 판매처의 이름을 조회합니다.
+     * @param sellerId 판매처 ID
+     * @return 판매처 이름
+     */
+    String getSellerName(Long sellerId);
+
+    /**
      * 새로운 판매처를 등록합니다.
      *
      * @param requestDto 등록할 판매처의 정보가 담긴 DTO

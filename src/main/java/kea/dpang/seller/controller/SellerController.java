@@ -31,6 +31,13 @@ public interface SellerController {
     ResponseEntity<SuccessResponse<DetailSellerResponseDto>> getSeller(Long id);
 
     /**
+     * 특정 판매처의 이름을 조회합니다.
+     * @param id 조회할 판매처의 ID
+     * @return 응답 코드, 해당 판매처의 이름
+     */
+    ResponseEntity<SuccessResponse<String>> getSellerName(Long id);
+
+    /**
      * 판매처를 데이터베이스에 등록합니다.
      *
      * @param createSellerRequestDto 등록할 판매처 정보가 담긴 DTO

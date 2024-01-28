@@ -1,6 +1,7 @@
 package kea.dpang.seller.entity;
 
 import jakarta.persistence.*;
+import kea.dpang.seller.dto.request.UpdateSellerRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,13 +40,11 @@ public class SellerDetail {
     /**
      * 판매처 상세 정보를 수정합니다.
      *
-     * @param sellerManager 판매처 관리자
-     * @param expiryDate    계약 만료 날짜
-     * @param note          비고
+     * @param dto 판매처 상세 정보 수정 내용을 가지는 DTO
      */
-    public void update(String sellerManager, LocalDate expiryDate, String note) {
-        this.sellerManager = sellerManager;
-        this.expiryDate = expiryDate;
-        this.note = note;
+    public void update(UpdateSellerRequestDto dto) {
+        this.sellerManager = dto.getManager();;
+        this.expiryDate = dto.getExpiryDate();
+        this.note = dto.getNote();
     }
 }
