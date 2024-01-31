@@ -58,6 +58,7 @@ public class SellerControllerImpl implements SellerController {
             @RequestParam @Parameter(description = "Seller ID") Long id
     ){
         String sellerName = sellerService.getSellerName(id);
+
         return ResponseEntity.ok(new SuccessResponse<>(200, "판매처 이름 조회가 완료되었습니다.", sellerName));
     }
 
@@ -91,5 +92,4 @@ public class SellerControllerImpl implements SellerController {
         sellerService.deleteSeller(ids);
         return ResponseEntity.ok(new BaseResponse(200, "판매처 삭제가 완료되었습니다."));
     }
-
 }
