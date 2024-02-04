@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SellerController {
 
@@ -20,7 +21,7 @@ public interface SellerController {
      * @param pageable 페이지 정보
      * @return 응답 코드와 판매처 정보를 담은 페이지 DTO
      */
-    ResponseEntity<SuccessResponse<Page<SellerResponseDto>>> getSellerList(Pageable pageable);
+    ResponseEntity<SuccessResponse<Page<SellerResponseDto>>> getSellerList(Optional<String> sellerName, Pageable pageable);
 
     /**
      * 특정 판매처 정보를 조회합니다.
