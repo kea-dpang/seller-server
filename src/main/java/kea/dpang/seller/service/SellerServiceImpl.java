@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,9 +27,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<SellerResponseDto> getSellerList(Pageable pageable) {
+    public Page<SellerResponseDto> getSellerList(Optional<String> sellerName, Pageable pageable) {
         // 데이터베이스에서 pageable에 따른 Seller 객체들을 페이지로 가져온다.
-        Page<Seller> sellerPage = sellerRepository.findAll(pageable);
+        Page<Seller> sellerPage = sellerRepository.findAllBySellerName(sellerName.orElse(null),pageable);
 
         // 가져온 Seller 페이지의 각 Seller 객체를 SellerResponseDto로 변환한다.
         return sellerPage.map(SellerResponseDto::new);

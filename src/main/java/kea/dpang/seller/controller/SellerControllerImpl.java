@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * seller 서비스의 컨트롤러
@@ -35,9 +36,10 @@ public class SellerControllerImpl implements SellerController {
     @GetMapping
     @Operation(summary = "판매처 목록 조회", description = "판매처를 페이지네이션하여 조회합니다.")
     public ResponseEntity<SuccessResponse<Page<SellerResponseDto>>> getSellerList(
+            @RequestParam @Parameter(description = "판매처 이름 검색") Optional<String> sellerName,
             Pageable pageable
     ) {
-        Page<SellerResponseDto> sellerDtoPage = sellerService.getSellerList(pageable);
+        Page<SellerResponseDto> sellerDtoPage = sellerService.getSellerList(sellerName,pageable);
         return ResponseEntity.ok(new SuccessResponse<>(200, "판매처 목록 조회가 완료되었습니다.", sellerDtoPage));
     }
 

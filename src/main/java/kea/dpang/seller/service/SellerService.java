@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Seller 서비스 인터페이스
@@ -21,7 +22,7 @@ public interface SellerService {
      * @param pageable 페이지네이션 정보
      * @return 페이지네이션된 QnA 정보
      */
-    Page<SellerResponseDto> getSellerList(Pageable pageable);
+    Page<SellerResponseDto> getSellerList(Optional<String> sellerName, Pageable pageable);
 
     /**
      * 주어진 ID에 해당하는 판매처의 정보를 조회합니다.
