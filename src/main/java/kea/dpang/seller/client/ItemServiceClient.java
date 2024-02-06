@@ -12,6 +12,6 @@ import java.util.List;
 
 @FeignClient("item-server")
 public interface ItemServiceClient {
-    @DeleteMapping
+    @DeleteMapping("/api/items/sellers")
     ResponseEntity<BaseResponse> deleteItem (@RequestBody DeleteItemDto requestDto);
 }

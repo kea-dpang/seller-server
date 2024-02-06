@@ -12,6 +12,6 @@ import java.util.List;
 
 @FeignClient("event-server")
 public interface EventServiceClient {
-    @DeleteMapping
+    @DeleteMapping("/api/event/sellers")
     ResponseEntity<BaseResponse> deleteEvent(@RequestBody DeleteEventDto requestDto);
 }
