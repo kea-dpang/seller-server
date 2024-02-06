@@ -1,5 +1,9 @@
 package kea.dpang.seller.service;
 
+import kea.dpang.seller.client.EventServiceClient;
+import kea.dpang.seller.client.ItemServiceClient;
+import kea.dpang.seller.client.dto.DeleteEventDto;
+import kea.dpang.seller.client.dto.DeleteItemDto;
 import kea.dpang.seller.dto.request.CreateSellerRequestDto;
 import kea.dpang.seller.dto.request.UpdateSellerRequestDto;
 import kea.dpang.seller.dto.response.SellerResponseDto;
@@ -25,11 +29,14 @@ public class SellerServiceImpl implements SellerService {
 
     private final SellerRepository sellerRepository;
 
+    private final ItemServiceClient itemServiceClient;
+    private final EventServiceClient eventServiceClient;
+
     @Override
     @Transactional(readOnly = true)
     public Page<SellerResponseDto> getSellerList(Optional<String> sellerName, Pageable pageable) {
         // 데이터베이스에서 pageable에 따른 Seller 객체들을 페이지로 가져온다.
-        Page<Seller> sellerPage = sellerRepository.findAllBySellerName(sellerName.orElse(null),pageable);
+        Page<Seller> sellerPage = sellerRepository.findAllBySellerName(sellerName.orElse(null), pageable);
 
         // 가져온 Seller 페이지의 각 Seller 객체를 SellerResponseDto로 변환한다.
         return sellerPage.map(SellerResponseDto::new);
@@ -48,9 +55,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     @Transactional(readOnly = true)
-    public String getSellerName(Long sellerId){
+    public String getSellerName(Long sellerId) {
         return sellerRepository.findById(sellerId)
-                .orElseThrow(()->new SellerNotFoundException(sellerId))
+                .orElseThrow(() -> new SellerNotFoundException(sellerId))
                 .getName();
     }
 
@@ -99,6 +106,16 @@ public class SellerServiceImpl implements SellerService {
 
         // 모든 판매처가 존재한다면, 해당 판매처들을 모두 삭제한다.
         sellerRepository.deleteAllById(sellerIds);
+
+        // 삭제된 판매처들과 연결된 상품들 삭제
+        itemServiceClient.deleteItem(DeleteItemDto.builder()
+                .sellerIds(sellerIds)
+                .build());
+
+        // 삭제된 판매처들과 연결된 이젠트들 삭제
+        eventServiceClient.deleteEvent(DeleteEventDto.builder()
+                .sellerIds(sellerIds)
+                .build());
     }
 
 }
